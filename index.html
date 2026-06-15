@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive 20-Question Geometry & Algebra Quiz</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        .lang-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Context Dashboard Style */
+        .intro-dashboard {
+            background: #fdfefe;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .intro-section {
+            margin-bottom: 20px;
+        }
+
+        .intro-section h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-size: 1.15em;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 5px;
+        }
+
+        .intro-section p {
+            line-height: 1.6;
+            margin: 0;
+            font-size: 0.98em;
+            text-align: justify;
+        }
+
+        .diagram-container {
+            background: #ffffff;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0 35px 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .shape-box {
+            border: 2px solid #333;
+            padding: 10px;
+            background: #fff;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .shape-box.highlight {
+            border-color: var(--success);
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .arrow {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .g-root { grid-column: 2; }
+        .g-arr1 { grid-column: 1; }
+        .g-arr2 { grid-column: 3; }
+        .g-trap { grid-column: 1; }
+        .g-kite { grid-column: 3; }
+        .g-iso  { grid-column: 1; }
+        .g-para { grid-column: 2; }
+        .g-rect { grid-column: 1; }
+        .g-rhom { grid-column: 3; }
+        .g-sq   { grid-column: 2; }
+
+        .quiz-header {
+            border-top: 2px dashed var(--border);
+            padding-top: 25px;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #question-text {
+            margin-top: 20px;
+            line-height: 1.6;
+            text-align: justify;
+            text-align-last: start;
+        }
+
+        .math-var {
+            direction: ltr;
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            background: #f1f2f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .option-btn {
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1em;
+            transition: all 0.15s ease;
+        }
+
+        body[dir="rtl"] .option-btn {
+            text-align: right;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent);
+            background: #f0f7fc;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #eef2f5;
+            font-weight: bold;
+        }
+
+        .option-btn.correct {
+            background: #d4edda !important;
+            border-color: var(--success) !important;
+            color: #155724 !important;
+            font-weight: bold;
+        }
+
+        .option-btn.wrong {
+            background: #f8d7da !important;
+            border-color: var(--danger) !important;
+            color: #721c24 !important;
+        }
+
+        .feedback-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        .feedback-box.correct-style {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid var(--success);
+        }
+
+        .feedback-box.wrong-style {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid var(--danger);
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-orange { background: #e67e22; color: white; }
+        .btn-purple { background: #9b59b6; color: white; } /* Color for Regenerate */
+        .btn-success { background: var(--success); color: white; display: block; width: 100%; margin-top: 15px; font-size: 1.1em;}
+        .btn:disabled { background: #ccc; cursor: not-allowed; color: #666; }
+
+        #quiz-stage-box { display: none; }
+        #result-screen { display: none; text-align: center; }
+        .score { font-size: 3.5em; font-weight: bold; color: var(--accent); margin: 20px 0; }
+        
+        body[dir="rtl"] { direction: rtl; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="lang-selector">
+        <button class="lang-btn active" onclick="changeLanguage('he')">עברית</button>
+        <button class="lang-btn" onclick="changeLanguage('en')">English</button>
+        <button class="lang-btn" onclick="changeLanguage('ar')">العربية</button>
+        <button class="lang-btn" onclick="changeLanguage('ru')">Русский</button>
+    </div>
+
+    <div id="intro-portal">
+        <h2 id="portal-main-title" style="text-align: center; color: var(--primary); margin-bottom: 25px;">למה לומדים גאומטריה ואלגברה?</h2>
+        
+        <div class="intro-dashboard">
+            <div class="intro-section">
+                <h4 id="h-hist">📜 היסטוריה קצרה</h4>
+                <p id="p-hist">המילה "גאומטריה" מגיעה מיוונית עתיקה: "גאו" (אדמה) ו"מטריה" (מדידה). במצרים העתיקה ובבבל, בכל שנה נהר הנילוס היה מציף את השדות ומוחק את הגבולות החקלאיים. המצרים נאלצו להמציא שיטות מתמטיות של חישובי שטחים והיקפים כדי לחלק מחדש את הקרקעות בצורה צודקת, ולבנות את הפירמידות העצומות ברמת דיוק מדהימה.</p>
+            </div>
+            <div class="intro-section">
+                <h4 id="h-why">💡 למה אנחנו צריכים ללמוד את זה? (מוטיבציה)</h4>
+                <p id="p-why">צורות הנדסיות ומרובעים הם אבני הבניין של העולם הפיזי סביבנו. בין אם מדובר במסכי הטלפון שלנו (מלבנים), גורדי שחקים, או רשתות ניווט לווייניות (GPS), המתמטיקה של שטחים ויחסים קובעת את היציבות, העלות והעיצוב שלהם. שילוב אלגברה בגאומטריה מאפשר לנו למצוא מידות לא ידועות מתוך נתונים חלקיים - כלי קריטי לכל מהנדס, אדריכל ומדען נתונים.</p>
+            </div>
+            <div class="intro-section">
+                <h4 id="h-school">🏫 למה לומדים את זה דווקא בבית הספר?</h4>
+                <p id="p-school">לימוד מרובעים ומשוואות בבית הספר אינו מיועד רק כדי לדעת נוסחאות בעל פה. המטרה האמיתית היא פיתוח חשיבה לוגית, ראייה מרחבית ויכולת פתרון בעיות מורכבות. המעבר ממשפט גאומטרי מופשט להוכחה מסודרת בנה במוח חיווט עצבי של חשיבה ביקורתית, שעוזר לקבל החלטות מבוססות נתונים בכל תחום בחיים הבוגרים.</p>
+            </div>
+            
+            <button class="btn btn-success" id="btn-start" onclick="launchQuizChallenge()">התחל את האתגר החינוכי / Start Quiz</button>
+        </div>
+    </div>
+
+    <div id="quiz-stage-box">
+        <h3 id="map-title" style="text-align: center; color: var(--primary);">מפת קשרים גאומטרית</h3>
+        <div class="diagram-container" id="live-diagram"></div>
+
+        <div id="quiz-screen">
+            <div class="quiz-header">
+                <h2 id="quiz-title">חידון מרובעים וריבועים מורחב</h2>
+                <div class="progress-bar"><div class="progress" id="quiz-progress"></div></div>
+                <div id="question-counter" style="font-weight: bold; color: #555;"></div>
+            </div>
+
+            <div id="question-box">
+                <h3 id="question-text"></h3>
+                <div class="options-container" id="options-box"></div>
+                <div class="feedback-box" id="feedback-message"></div>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn btn-primary" id="btn-prev" onclick="navigateQuestion(-1)">הקודם</button>
+                <button class="btn btn-orange" id="btn-check" onclick="verifyChoice()">בדוק תשובה</button>
+                <button class="btn btn-purple" id="btn-regen" onclick="regenerateQuestions()">שאלות חדשות 🔄</button>
+                <button class="btn btn-accent" id="btn-next" onclick="navigateQuestion(1)">הבא</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-screen">
+        <h2 id="result-title">החידון הושלם!</h2>
+        <div class="score" id="score-display">0 / 20</div>
+        <button class="btn btn-primary" onclick="resetQuizEngine()">נסה שוב / Restart</button>
+    </div>
+</div>
+
+<script>
+    const dynamicContent = {
+        he: {
+            portalTitle: "למה לומדים גאומטריה ואלגברה?",
+            hHist: "📜 היסטוריה קצרה", pHist: "המילה 'גאומטריה' מגיעה מיוונית עתיקה: 'גאו' (אדמה) ו'מטריה' (מדידה). במצרים העתיקה ובבבל, בכל שנה נהר הנילוס היה מציף את השדות ומוחק את הגבולות החקלאיים. המצרים נאלצו להמציא שיטות מתמטיות של חישובי שטחים והיקפים כדי לחלק מחדש את הקרקעות בצורה צודקת, ולבנות את הפירמידות העצומות ברמת דיוק מדהימה.",
+            hWhy: "💡 למה אנחנו צריכים ללמוד את זה? (מוטיבציה)", pWhy: "צורות הנדסיות ומרובעים הם אבני הבניין של העולם הפיזי סביבנו. בין אם מדובר במסכי הטלפון שלנו (מלבנים), גורדי שחקים, או רשתות ניווט לווייניות (GPS), המתמטיקה של שטחים ויחסים קובעת את היציבות, העלות והעיצוב שלהם. שילוב אלגברה בגאומטריה מאפשר לנו למצוא מידות לא ידועות מתוך נתונים חלקיים - כלי קריטי לכל מהנדס, אדריכל ומדען נתונים.",
+            hSchool: "🏫 למה לומדים את זה דווקא בבית הספר?", pSchool: "לימוד מרובעים ומשוואות בבית הספר אינו מיועד רק כדי לדעת נוסחאות בעל פה. המטרה האמיתית היא פיתוח חשיבה לוגית, ראייה מרחבית ויכולת פתרון בעיות מורכבות. המעבר ממשפט גאומטרי מופשט להוכחה מסודרת בנה במוח חיווט עצבי של חשיבה ביקורתית, שעוזר לקבל החלטות מבוססות נתונים בכל תחום בחיים הבוגרים.",
+            startBtn: "התחל את האתגר החינוכי 🚀",
+            title: "חידון מרובעים חדש: גאומטריה ואלגברה (20 שאלות)", mapTitle: "מפת היררכיית המרובעים",
+            counter: "שאלה {current} מתוך {total}", check: "בדוק תשובה", next: "הבא", prev: "הקודם", regen: "שאלות חדשות 🔄",
+            correct: "תשובה נכונה!", incorrect: "תשובה לא נכונה.",
+            quad: "מרובע", trapezoid: "טרפז", kite: "דלתון", isoTrap: "טרפז שווה-שוקיים", parallelogram: "מקבילית", rectangle: "מלבן", rhombus: "מעויין", square: "ריבוע"
+        },
+        en: {
+            portalTitle: "Why Do We Learn Geometry & Algebra?",
+            hHist: "📜 A Brief History", pHist: "The word 'Geometry' originates from Ancient Greek: 'Geo' (Earth) and 'Metria' (Measurement). In Ancient Egypt and Babylone, the Nile river flooded every year, wiping out agricultural boundaries. Egyptians had to invent mathematical survey systems for areas and perimeters to fairly redistribute land and build the pyramids with astonishing spatial precision.",
+            hWhy: "💡 Why Do We Learn It? (Motivation)", pWhy: "Geometric profiles are the building blocks of the physical infrastructure around us. Whether it is our digital smartphone screens (rectangles), modern structural architecture, or Global Positioning Systems (GPS), spatial constraints dictate stability and performance. Merging algebra into geometry enables us to solve unknown variables from limited data points—a foundational tool for engineers and data scientists.",
+            hSchool: "🏫 Why Is It Taught in School?", pSchool: "Learning quadrilaterals and equations in school is not about memorizing abstract equations. The true purpose is to cultivate structural logic, spatial reasoning, and dynamic problem-solving capacity. Moving from an abstract geometric property to a valid proof designs analytical neural paths that empower rational, data-driven decisions throughout adult life.",
+            startBtn: "Launch Educational Challenge 🚀",
+            title: "New Quadrilateral Quiz: Geometry & Algebra (20 Questions)", mapTitle: "Geometric Hierarchy Map",
+            counter: "Question {current} of {total}", check: "Check Answer", next: "Next", prev: "Previous", regen: "Renew Quiz 🔄",
+            correct: "Correct Answer!", incorrect: "Incorrect Answer.",
+            quad: "Quadrilateral", trapezoid: "Trapezoid", kite: "Kite", isoTrap: "Isosceles Trapezoid", parallelogram: "Parallelogram", rectangle: "Rectangle", rhombus: "Rhombus", square: "Square"
+        },
+        ar: {
+            portalTitle: "لماذا نتعلم الهندسة والجبر؟",
+            hHist: "📜 لمحة تاريخية قصيرة", pHist: "تأتي كلمة 'الهندسة والقياس' (Geometry) من اليونانية القديمة: 'جيو' (الأرض) و'ميتريا' (قياس). في مصر القديمة وبابل، كان نهر النيل يفيض كل عام ويمحو الحدود الزراعية. واضطر المصريون إلى ابتكار طرق رياضية لحساب المساحات والمحيطات لإعادة تقسيم الأراضي بعدل، وبناء الأهرامات الضخمة بدقة مذهلة.",
+            hWhy: "💡 لماذا نحتاج إلى تعلم هذا? (الدافع)", pWhy: "الأشكال الهندسية والرباعية هي حجر الأساس للعالم المادي من حولنا. سواء كانت شاشات هواتفنا (مستطيلات)، أو ناطحات السحاب، أو شبكات الملاحة عبر الأقمار الصناعية (GPS)، فإن رياضيات المساحات والعлаقات تحدد استقرارها وتكلفتها وتصميمها. يتيح لنا دمج الجبر في الهندسة إيجاد أبعاد مجهولة من بيانات جزئية.",
+            hSchool: "🏫 لماذا نتعلم هذا في المدرسة تحديداً؟", pSchool: "إن دراسة الأشكال الرباعية والمعادلات في المدرسة لا تهدف فقط إلى حفظ الصيغ الرياضية. الهدف الحقيقي هو تطوير التفكير المنطقي، الرؤية الفراغية، والقدرة على حل المشكلات المعقدة. إن الانتقال من نظرية هندسية مجردة إلى برهان منظم يبني في الدماغ تفكيراً نقدياً.",
+            startBtn: "ابدأ التحدي التعليمي 🚀",
+            title: "مسابقة الأشكال الرباعية الجديدة: الهندسة والجبر (20 سؤالاً)", mapTitle: "مخطط شجرة العائلة الرباعية",
+            counter: "السؤال {current} من {total}", check: "تحقق من الإجابة", next: "التالي", prev: "السابق", regen: "تجديد الأسئلة 🔄",
+            correct: "إجابة صحيحة!", incorrect: "إجابة خاطئة.",
+            quad: "شكل رباعي", trapezoid: "شبه منحرف", kite: "طائرة ورقية", isoTrap: "شبه منحرف متساوي الساقين", parallelogram: "متوازي أضلاع", rectangle: "مستطيل", rhombus: "معين", square: "مربع"
+        },
+        ru: {
+            portalTitle: "Зачем мы изучаем геометрию и алгебру?",
+            hHist: "📜 Краткая история", pHist: "Слово 'геометрия' происходит из древнегреческого языка: 'гео' (земля) и 'метрия' (измерение). В Древнем Египте и Вавилоне ежегодные разливы Нила затапливали поля и стирали границы участков. Египтянам пришлось изобрести математические методы расчета площадей и периметров, чтобы справедливо перераспределять земли.",
+            hWhy: "💡 Зачем нам это нужно? (Мотивация)", pWhy: "Геометрические фигуры и четырехугольники — это элементы физического мира вокруг нас. Экраны смартфонов (прямоугольники), небоскребы или спутниковая навигация (GPS) — математика площадей и пропорций определяет их стабильность. Объединение алгебры с геометрией позволяет находить неизвестные величины по частичным данным.",
+            hSchool: "🏫 Почему это изучают именно в школе?", pSchool: "Изучение четырехугольников и уравнений в школе нужно не для механического заучивания формул. Настоящая цель — развитие логического мышления, пространственного воображения и навыков решения сложных задач. Переход к упорядоченному доказательству развивает критическое мышление.",
+            startBtn: "Начать викторину 🚀",
+            title: "Новый квиз по четырехугольникам: Геометрия и Алгебра (20 вопросов)", mapTitle: "Карта иерархии четырехугольников",
+            counter: "Вопрос {current} из {total}", check: "Проверить ответ", next: "Далее", prev: "Назад", regen: "Обновить вопросы 🔄",
+            correct: "Правильно!", incorrect: "Неправильно.",
+            quad: "Четырехугольник", trapezoid: "Трапеция", kite: "Дельтоид", isoTrap: "Равнобедренная трапеция", parallelogram: "Параллелограмм", rectangle: "Прямоугольник", rhombus: "Ромб", square: "Квадрат"
+        }
+    };
+
+    const quizDatabase = [
+        // 1
+        {
+            he: { q: "שאלה 1: אם נחבר את אמצעי הצלעות של מרובע כלשהו, איזו צורה תתקבל תמיד?", a: ["מלבן", "טרפז", "מקבילית", "ריבוע"], exp: "לפי משפט וריניון, חיבור אמצעי הצלעות של כל מרובע מייצר תמיד מקבילית." },
+            en: { q: "Question 1: If you connect the midpoints of the sides of any arbitrary quadrilateral, what shape is always formed?", a: ["Rectangle", "Trapezoid", "Parallelogram", "Square"], exp: "According to Varignon's Theorem, connecting the midpoints of any quadrilateral always forms a parallelogram." },
+            ar: { q: "سؤال 1: إذا قمت بتوصيل منتصفات أضلاع أي شكل رباعي عشوائي، فما الشكل الذي يتكون دائماً؟", a: ["مستطيل", "شبه منحرف", "متوازي أضلاع", "مربع"], exp: "وفقاً لنظرية فارينيون، فإن توصيل منتصفات أضلاع أي شكل رباعي يشكل دائماً متوازي أضلاع." },
+            ru: { q: "Вопрос 1: Если соединить середины сторон любого произвольного четырехугольника, какая фигура всегда получится?", a: ["Прямоугольник", "Трапеция", "Параллелограмм", "Квадрат"], exp: "Согласно теореме Вариньона, последовательное соединение середин сторон любого четырехугольника всегда образует параллелограмм." },
+            correctIndex: 2
+        },
+        // 2
+        {
+            he: { q: "שאלה 2: מה התנאי המינימלי ההכרחי כדי להפוך טרפז לטרפז שווה-שוקיים?", a: ["שהאלכסונים שלו יהיו מאונכים", "שזוויות הבסיס שלו יהיו שוות", "שכל זוויותיו יהיו ישרות", "ששני זוגות של צלעות יהיו מקבילים"], exp: "טרפז שבו זוויות הבסיס שוות זו לזו הוא בהכרח טרפז שווה-שוקיים." },
+            en: { q: "Question 2: What is the minimum condition required to classify a general trapezoid as an isosceles trapezoid?", a: ["Its diagonals must be perpendicular", "Its base angles must be equal", "All of its angles must be right angles", "Both pairs of opposite sides must be parallel"], exp: "A trapezoid with equal base angles is logically guaranteed to be an isosceles trapezoid." },
+            ar: { q: "سؤال 2: ما هو الحد الأدنى من الشروط المطلوبة لتصنيف شبه المنحرف العام على أنه شبه منحرف متساوي الساقين؟", a: ["يجب أن تكون أقطاره متعامدة", "يجب أن تكون زوايا القاعدة متساوية", "يجب أن تكون جميع زواياه قائمة", "يجب أن يكون كلا الزوجين من الأضلاع المتقابلة متوازيين"], exp: "شبه المنحرف الذي تتساوى فيه زوايا القاعدة يكون هندسياً شبه منحرف متساوي الساقين." },
+            ru: { q: "Вопрос 2: Какое минимальное условие необходимо, чтобы считать обычную трапецию равнобедренной?", a: ["Ее диагонали должны быть перпендикулярны", "Углы при ее основании должны быть равны", "Все ее углы должны быть прямыми", "Две пары противоположных сторон должны быть параллельны"], exp: "Трапеция, у которой углы при основании равны, гарантированно является равнобедренной." },
+            correctIndex: 1
+        },
+        // 3
+        {
+            he: { q: "שאלה 3: היקפו של ריבוע הוא <span class='math-var'>4x + 16</span>. מהו ביטוי השטח שלו?", a: ["x² + 16", "(x + 4)²", "4(x + 4)", "(4x + 16)²"], exp: "נחלק את ההיקף ב-4 כדי למצוא את אורך הצלע: (4x+16)/4 = x+4. לכן השטח הוא הצלע בריבוע: (x+4)²." },
+            en: { q: "Question 3: The perimeter of a square is expressed as <span class='math-var'>4x + 16</span>. What is the expression for its area?", a: ["x² + 16", "(x + 4)²", "4(x + 4)", "(4x + 16)²"], exp: "Divide the perimeter by 4 to get the side length: (4x+16)/4 = x+4. The area is the side squared: (x+4)²." },
+            ar: { q: "سؤال 3: محيط مربع يعبر عنه بالعبارة <span class='math-var'>4x + 16</span>. ما هو التعبير الرياضي لمساحته？", a: ["x² + 16", "(x + 4)²", "4(x + 4)", "(4x + 16)²"], exp: "اقسم المحيط على 4 للحصول على طول الضلع: (4x+16)/4 = x+4. المساحة هي مربع الضلع: (x+4)²." },
+            ru: { q: "Вопрос 3: Периметр квадрата выражен как <span class='math-var'>4x + 16</span>. Каково выражение для его площади?", a: ["x² + 16", "(x + 4)²", "4(x + 4)", "(4x + 16)²"], exp: "Разделим периметр на 4, чтобы найти сторону: (4x+16)/4 = x+4. Площадь равна стороне в квадрате: (x+4)²." },
+            correctIndex: 1
+        },
+        // 4
+        {
+            he: { q: "שאלה 4: מה ניתן לומר תמיד על אלכסוניו של מעויין?", a: ["הם שווים באורכם", "הם מאונכים זה לזה וחוצים זה את זה", "הם יוצרים זוויות של 45 מעלות עם הצלעות", "הם מקבילים לצלעות"], exp: "במעויין, האלכסונים תמיד מאונכים זה לזה (90 מעלות) וחוצים זה את זה לשני חצאים שווים." },
+            en: { q: "Question 4: What properties do the diagonals of a rhombus always possess?", a: ["They are always equal in length", "They are perpendicular to each other and bisect each other", "They always form 45-degree angles with the sides", "They are parallel to the outer boundaries"], exp: "Rhombus diagonals are always perpendicular (at 90 degrees) and bisect each other into equal halves." },
+            ar: { q: "سؤال 4: ما هي الخصائص التي تمتلكها أقطار المعين دائماً؟", a: ["متساوية دائماً في الطول", "متعامدة وينصف بعضها بعضاً", "تشكل دائماً زوايا 45 درجة مع الأضلاع", "متوازية مع الحدود الخارجية"], exp: "أقطار المعين تكون دائماً متعامدة (بزاوية 90 درجة) وينصف كل منها الآخر إلى نصفين متساويين." },
+            ru: { q: "Вопрос 4: Какими свойствами всегда обладают диагонали ромба?", a: ["Они всегда равны по длине", "Они перпендикулярны друг другу и делятся пополам в точке пересечения", "Они всегда образуют углы 45 градусов со сторонами", "Они параллельны внешним сторонам"], exp: "Диагонали ромба всегда взаимно перпендикулярны (под углом 90 градусов) и делятся точкой пересечения пополам." },
+            correctIndex: 1
+        },
+        // 5
+        {
+            he: { q: "שאלה 5: צלע של מלבן היא 6 ס״מ ואורך האלכסון שלו הוא 10 ס״מ. מהו שטח המלבן?", a: ["60 סמ״ר", "48 סמ״ר", "24 סמ״ר", "36 סמ״ר"], exp: "לפי משפט פיתגורס, הצלע השנייה היא שורש של (10² - 6²) שהוא 8 ס״מ. השטח הוא 6 × 8 = 48 סמ״ר." },
+            en: { q: "Question 5: One side of a rectangle is 6 cm and its diagonal is 10 cm. What is the area of the rectangle?", a: ["60 cm²", "48 cm²", "24 cm²", "36 cm²"], exp: "Using the Pythagorean theorem, the other side is √(10² - 6²) = 8 cm. The area is 6 × 8 = 48 cm²." },
+            ar: { q: "سؤال 5: أحد أضلاع مستطيل هو 6 سم وطول قطره 10 سم. ما هي مساحة المستطيل؟", a: ["60 سم²", "48 سم²", "24 سم²", "36 سم²"], exp: "باستخدام نظرية فيثاغورس، الضلع الآخر هو جذر (10² - 6²) = 8 سم. المساحة هي 6 × 8 = 48 سم²." },
+            ru: { q: "Вопрос 5: Одна сторона прямоугольника равна 6 см, а его диагональ — 10 см. Чему равна площадь прямоугольника?", a: ["60 см²", "48 см²", "24 см²", "36 см²"], exp: "По теореме Пифагора, вторая сторона равна √(10² - 6²) = 8 см. Площадь равна 6 × 8 = 48 см²." },
+            correctIndex: 1
+        },
+        // 6
+        {
+            he: { q: "שאלה 6: אילו תכונות מלבן צריך לאמץ כדי להיקרא ריבוע?", a: ["אלכסונים חוצים וצלעות נגדיות מקבילות", "אלכסונים שווים וארבע זוויות ישרות", "שתי צלעות סמוכות שוות (או אלכסונים מאונכים)", "זוג אחד של צלעות מקבילות"], exp: "למלבן כבר יש זוויות ישרות ואלכסונים שווים. כדי להפוך לריבוע, הוא זקוק לתכונות המעויין: צלעות סמוכות שוות או אלכסונים מאונכים." },
+            en: { q: "Question 6: Which additional properties must a rectangle adopt to legally upgrade into a square?", a: ["Bisecting diagonals and parallel opposite sides", "Equal diagonals and four right angles", "Two adjacent sides equal (or perpendicular diagonals)", "Exactly one pair of parallel segments"], exp: "A rectangle already has right angles and equal diagonals. To become a square, it needs rhombus features: equal adjacent sides or perpendicular diagonals." },
+            ar: { q: "سؤال 6: ما هي الخصائص الإضافية التي يجب أن يكتسبها المستطيل ليتحول إلى مربع؟", a: ["أقطار منصفة وأضلاع متقابلة متوازية", "أقطار متساوية وأربع زوايا قائمة", "ضلعان متجاوران متساويان (أو أقطار متعامدة)", "زوج واحد فقط من الأضلاع المتوازية"], exp: "المستطيل يحتوي بالفعل على زوايا قائمة وأقطار متساوية. لكي يصبح مربعاً، يحتاج إلى خصائص المعين: أضلاع متجاورة متساوية أو أقطار متعامدة." },
+            ru: { q: "Вопрос 6: Какие дополнительные свойства должен приобрести прямоугольник, чтобы стать квадратом?", a: ["Делящиеся пополам диагонали и параллельные стороны", "Равные диагонали и четыре прямых угла", "Две смежные стороны равны (или перпендикулярные диагонали)", "Ровно одну пару параллельных сторон"], exp: "У прямоугольника уже есть прямые углы и равные диагонали. Чтобы стать квадратом, ему нужны свойства ромба: равные смежные стороны или перпендикулярные диагонали." },
+            correctIndex: 2
+        },
+        // 7
+        {
+            he: { q: "שאלה 7: במקבילית, שתיים מהזוויות הסמוכות מיוצגות כ-<span class='math-var'>2x</span> ו-<span class='math-var'>3x + 20</span> מעלות. מצא את ערכו של x.", a: ["x = 32", "x = 20", "x = 40", "x = 16"], exp: "במקבילית, סכום זוויות סמוכות הוא 180 מעלות: 2x + 3x + 20 = 180 -> 5x = 160 -> x = 32." },
+            en: { q: "Question 7: In a parallelogram, two consecutive angles are expressed as <span class='math-var'>2x</span> and <span class='math-var'>3x + 20</span> degrees. Solve for x.", a: ["x = 32", "x = 20", "x = 40", "x = 16"], exp: "Consecutive angles in a parallelogram sum up to 180 degrees: 2x + 3x + 20 = 180 -> 5x = 160 -> x = 32." },
+            ar: { q: "سؤال 7: في متوازي الأضلاع، يعبر عن زاويتين متتاليتين بالعبارات <span class='math-var'>2x</span> و <span class='math-var'>3x + 20</span> درجة. أوجد قيمة x.", a: ["x = 32", "x = 20", "x = 40", "x = 16"], exp: "الزوايا المتتالية في متوازي الأضلاع مجموعها 180 درجة: 2x + 3x + 20 = 180 -> 5x = 160 -> x = 32." },
+            ru: { q: "Вопрос 7: В параллелограмме два соседних угла выражены как <span class='math-var'>2x</span> и <span class='math-var'>3x + 20</span> градусов. Найдите x.", a: ["x = 32", "x = 20", "x = 40", "x = 16"], exp: "Сумма соседних углов параллелограмма равна 180 градусам: 2x + 3x + 20 = 180 -> 5x = 160 -> x = 32." },
+            correctIndex: 0
+        },
+        // 8
+        {
+            he: { q: "שאלה 8: שטח של מעויין הוא 60 סמ״ר, ואורך אחד מאלכסוניו הוא 10 ס״מ. מה אורך האלכסון השני?", a: ["6 ס״מ", "12 ס״מ", "24 ס״מ", "15 ס״מ"], exp: "שטח מעויין מחושב כחצי מכפלת האלכסונים: (d1 × d2) / 2 = השטח. לכן (10 × d2) / 2 = 60 -> 5 × d2 = 60 -> d2 = 12 ס״מ." },
+            en: { q: "Question 8: The total area of a rhombus is 60 cm², and one of its diagonals measures 10 cm. What is the length of the other diagonal?", a: ["6 cm", "12 cm", "24 cm", "15 cm"], exp: "Rhombus area is half the product of its diagonals: (d1 × d2) / 2 = Area. Thus (10 × d2) / 2 = 60 -> 5 × d2 = 60 -> d2 = 12 cm." },
+            ar: { q: "سؤال 8: المساحة الإجمالية لمعين هي 60 سم²، وطول أحد أقطاره 10 سم. ما هو طول القطر الآخر؟", a: ["6 سم", "12 سم", "24 سم", "15 سم"], exp: "مساحة المعين هي نصف حاصل ضرب قطريه: (d1 × d2) / 2 = المساحة. إذن (10 × d2) / 2 = 60 -> d2 = 12 سم." },
+            ru: { q: "Вопрос 8: Площадь ромба равна 60 см², а одна из его диагоналей равна 10 см. Чему равна длина второй диагонали?", a: ["6 см", "12 см", "24 см", "15 см"], exp: "Площадь ромба равна половине произведения его диагоналей: (d1 × d2) / 2 = Площадь. Значит (10 × d2) / 2 = 60 -> d2 = 12 см." },
+            correctIndex: 1
+        },
+        // 9
+        {
+            he: { q: "שאלה 9: אורך צלע של ריבוע א' הוא <span class='math-var'>x</span>. אם נגדיל את צלע הריבוע פי 3 כדי ליצור את ריבוע ב', פי כמה יגדל השטח שלו?", a: ["פי 3", "פי 6", "פי 9", "פי 12"], exp: "כשמגדילים מימד קווי פי קבוע k, השטח גדל פי k². מכיוון ש-3² = 9, השטח יגדל פי 9." },
+            en: { q: "Question 9: The side length of Square A is <span class='math-var'>x</span>. If its side length is tripled to create Square B, by what scale factor does the area increase?", a: ["By 3", "By 6", "By 9", "By 12"], exp: "When linear dimensions scale by factor k, the area scales by k². Since 3² = 9, the area increases 9-fold." },
+            ar: { q: "سؤال 9: طول ضلع المربع (أ) هو <span class='math-var'>x</span>. إذا تم تضاعف طول ضلعه 3 مرات لإنشاء المربع (ب)، فبأي عامل يتضاعف حجم المساحة؟", a: ["بمقدار 3", "بمقدار 6", "بمقدار 9", "بمقدار 12"], exp: "عندما تضرب الأبعاد الخطية في المعامل k، تزداد المساحة بمقدار k². وبما أن 3² = 9، فإن المساحة تزيد 9 مرات." },
+            ru: { q: "Вопрос 9: Сторона Квадрата А равна <span class='math-var'>x</span>. Если увеличить его сторону в 3 раза, чтобы получить Квадрат Б, во сколько раз увеличится его площадь?", a: ["В 3 раза", "В 6 раз", "В 9 раз", "В 12 раз"], exp: "При изменении линейных размеров в k раз площадь меняется в k² раз. Так как 3² = 9, площадь увеличится в 9 раз." },
+            correctIndex: 2
+        },
+        // 10
+        {
+            he: { q: "שאלה 10: בדלתון, האלכסון הראשי מחלק את האלכסון המשני לשני קטעים באורך 5 ס״מ כל אחד. אם אורך האלכסון הראשי הוא 14 ס״מ, מהו שטח הדלתון?", a: ["70 סמ״ר", "35 סמ״ר", "140 סמ״ר", "50 סמ״ר"], exp: "אורך האלכסון המשני הוא 5 + 5 = 10 ס״מ. שטח דלתון הוא מחצית מכפלת האלכסונים: (14 × 10) / 2 = 70 סמ״ר." },
+            en: { q: "Question 10: In a kite, the main diagonal splits the secondary diagonal into two segments of 5 cm each. If the main diagonal is 14 cm long, what is the area of the kite?", a: ["70 cm²", "35 cm²", "140 cm²", "50 cm²"], exp: "The total length of the secondary diagonal is 5 + 5 = 10 cm. The area of a kite is (d1 × d2) / 2 = (14 × 10) / 2 = 70 cm²." },
+            ar: { q: "سؤال 10: في الطائرة الورقية، يقسم القطر الرئيسي القطر الفرعي إلى قطعتين طول كل منهما 5 سم. إذا كان طول القطر الرئيسي 14 سم، فما مساحة الطائرة الورقية؟", a: ["70 سم²", "35 سم²", "140 سم²", "50 سم²"], exp: "الطول الإجمالي للقطр الفرعي هو 5 + 5 = 10 سم. مساحة الطائرة الورقية هي (14 × 10) / 2 = 70 سم²." },
+            ru: { q: "Вопрос 10: В дельтоиде главная диагональ делит второстепенную на два отрезка по 5 см каждый. Если длина главной диагонали равна 14 см, чему равна площадь дельтоида?", a: ["70 см²", "35 см²", "140 см²", "50 см²"], exp: "Общая длина второстепенной диагонали равна 5 + 5 = 10 см. Площадь дельтоида равна (d1 × d2) / 2 = (14 × 10) / 2 = 70 см²." },
+            correctIndex: 0
+        },
+        // 11
+        {
+            he: { q: "שאלה 11: נתון טרפז שבו אורכי הבסיסים הם 8 ס״מ ו-12 ס״מ, וגובהו הוא 6 ס״מ. מהו שטח הטרפז?", a: ["120 סמ״ר", "60 סמ״ר", "48 סמ״ר", "96 סמ״ר"], exp: "נוסחת שטח טרפז היא גובה כפול סכום הבסיסים חלקי 2: 6 × (8 + 12) / 2 = 6 × 10 = 60 סמ״ר." },
+            en: { q: "Question 11: A trapezoid has bases of lengths 8 cm and 12 cm, and its height is 6 cm. What is its total area?", a: ["120 cm²", "60 cm²", "48 cm²", "96 cm²"], exp: "The area formula for a trapezoid is height times the sum of the bases divided by 2: 6 × (8 + 12) / 2 = 60 cm²." },
+            ar: { q: "سؤال 11: شبه منحرف طول قاعدتيه 8 سم و 12 سم، وارتفاعه 6 سم. ما هي مساحته الإجمالية؟", a: ["120 سم²", "60 سم²", "48 سم²", "96 سم²"], exp: "قانون مساحة شبه المنحرف هو الارتفاع × (مجموع القاعدتين) ÷ 2: 6 × (8 + 12) ÷ 2 = 60 سم²." },
+            ru: { q: "Вопрос 11: Трапеция имеет основания длиной 8 см и 12 см, а ее высота равна 6 см. Чему равна ее общая площадь?", a: ["120 см²", "60 см²", "48 см²", "96 см²"], exp: "Формула площади трапеции: высота умножить на сумму оснований и разделить на два: 6 × (8 + 12) / 2 = 60 см²." },
+            correctIndex: 1
+        },
+        // 12
+        {
+            he: { q: "שאלה 12: איזה משפט מהבאים נכון תמיד לגבי טרפז שווה-שוקיים?", a: ["האלכסונים שלו שווים באורכם", "האלכסונים שלו מאונכים זה לזה", "כל שתי זוויות נגדיות שוות זו לזו", "הוא בעל שני זוגות של צלעות מקבילות"], exp: "בטרפז שווה-שוקיים, האלכסונים תמיד שווים באורכם לחלוטין." },
+            en: { q: "Question 12: Which statement is always true specifically for an Isosceles Trapezoid?", a: ["Its diagonals are equal in length", "Its diagonals are mutually perpendicular", "Any two opposite angles are equal", "It contains two distinct pairs of parallel sides"], exp: "In an isosceles trapezoid, the diagonals are always perfectly equal in length." },
+            ar: { q: "سؤال 12: أي عبارة مما يلي صحيحة دائماً وبشكل خاص لشبه المنحرف متساوي الساقين؟", a: ["أقطاره متساوية في الطول", "أقطاره متعامدة تبادلياً", "أي زاويتين متقابلتين متساويتان", "يحتوي على زوجين منفصلين من الأضلاع المتوازية"], exp: "في شبه المنحرف متساوي الساقين، تكون الأقطار دائماً متساوية تماماً في الطول." },
+            ru: { q: "Вопрос 12: Какое утверждение всегда верно именно для равнобедренной трапеции?", a: ["Ее диагонали равны по длине", "Ее диагонали взаимно перпендикулярны", "Любые два противоположных угла равны", "Она содержит две пары параллельных сторон"], exp: "У равнобедренной трапеции диагонали всегда абсолютно равны по длине." },
+            correctIndex: 0
+        },
+        // 13
+        {
+            he: { q: "שאלה 13: אורך צלע של ריבוע מיוצג על ידי הביטוי <span class='math-var'>3x - 1</span>. אם שטח הריבוע הוא 64 סמ״ר, מצא את ערכו של x.", a: ["x = 3", "x = 5", "x = 4", "x = 2"], exp: "אורך הצלע הוא שורש של 64, כלומר 8. נפתור את המשוואה: 3x - 1 = 8 -> 3x = 9 -> x = 3." },
+            en: { q: "Question 13: The side length of a square is represented by the algebraic term <span class='math-var'>3x - 1</span>. If the area is 64 cm², find x.", a: ["x = 3", "x = 5", "x = 4", "x = 2"], exp: "The side length is √64 = 8. Set up the linear equation: 3x - 1 = 8 -> 3x = 9 -> x = 3." },
+            ar: { q: "سؤال 13: يعبر عن طول ضلع مربع بالعبارة الجبرية <span class='math-var'>3x - 1</span>. إذا كانت المساحة 64 سم²، فما قيمة x؟", a: ["x = 3", "x = 5", "x = 4", "x = 2"], exp: "طول الضلع هو جذر 64 = 8. حل المعادلة الخطية: 3x - 1 = 8 -> 3x = 9 -> x = 3." },
+            ru: { q: "Вопрос 13: Сторона квадрата выражена алгебраическим выражением <span class='math-var'>3x - 1</span>. Если площадь равна 64 см², найдите x.", a: ["x = 3", "x = 5", "x = 4", "x = 2"], exp: "Длина стороны равна √64 = 8. Составим уравнение: 3x - 1 = 8 -> 3x = 9 -> x = 3." },
+            correctIndex: 0
+        },
+        // 14
+        {
+            he: { q: "שאלה 14: מלבן בעל אורך של <span class='math-var'>x + 4</span> ורוחב של <span class='math-var'>x - 4</span>. אם שטח המלבן הוא 9 מ״ר, מצא את x.", a: ["x = 5", "x = 4", "x = 6", "x = 25"], exp: "השטח הוא מכפלת הצלעות: (x+4)(x-4) = x² - 16 = 9. נעביר אגף: x² = 25 -> x = 5 (מידה חיובית)." },
+            en: { q: "Question 14: A rectangle has dimensions of length <span class='math-var'>x + 4</span> and width <span class='math-var'>x - 4</span>. If its area is 9 m², solve for x.", a: ["x = 5", "x = 4", "x = 6", "x = 25"], exp: "Area is length times width: (x+4)(x-4) = x² - 16 = 9. Adding 16 gives x² = 25, so x = 5." },
+            ar: { q: "سؤال 14: مستطيل أبعاده هي الطول <span class='math-var'>x + 4</span> والعرض <span class='math-var'>x - 4</span>. إذا كانت مساحته 9 م²، فما قيمة x؟", a: ["x = 5", "x = 4", "x = 6", "x = 25"], exp: "المساحة هي الطول × العرض: (x+4)(x-4) = x² - 16 = 9. بإضافة 16 نحصل على x² = 25، إذن x = 5." },
+            ru: { q: "Вопрос 14: Длина прямоугольника равна <span class='math-var'>x + 4</span>, а ширина — <span class='math-var'>x - 4</span>. Если его площадь равна 9 м², найдите x.", a: ["x = 5", "x = 4", "x = 6", "x = 25"], exp: "Площасть равна произведению сторон: (x+4)(x-4) = x² - 16 = 9. Переносим 16: x² = 25, следовательно x = 5." },
+            correctIndex: 0
+        },
+        // 15
+        {
+            he: { q: "שאלה 15: היקף מקבילית הוא 50 ס״מ. אם צלע אחת ארוכה ב-5 ס״מ מהצלע הסמוכה לה, מה אורך הצלע הקצרה?", a: ["10 ס״מ", "15 ס״מ", "20 ס״מ", "5 ס״מ"], exp: "נסמן את הקצרה ב-x והארוכה ב-x+5. ההיקף הוא 2(x + x + 5) = 50 -> 4x + 10 = 50 -> 4x = 40 -> x = 10 ס״מ." },
+            en: { q: "Question 15: The perimeter of a parallelogram is 50 cm. If one side is 5 cm longer than its consecutive neighbor, what is the length of the shorter side?", a: ["10 cm", "15 cm", "20 cm", "5 cm"], exp: "Let the shorter side be x and longer side be x+5. Perimeter is 2(x + x + 5) = 50 -> 4x + 10 = 50 -> 4x = 40 -> x = 10 cm." },
+            ar: { q: "سؤال 15: محيط متوازي أضلاع هو 50 سم. إذا كان أحد الأضلاع أطول بمقدار 5 سم من الضلع المتالي له، فما هو طول الضلع الأقصر؟", a: ["10 سم", "15 سم", "20 سم", "5 سم"], exp: "نفرض أن الضلع الأقصر x والأطول x+5. المحيط هو 2(x + x + 5) = 50 -> 4x + 10 = 50 -> x = 10 سم." },
+            ru: { q: "Вопрос 15: Периметр параллелограмма равен 50 см. Если одна сторона на 5 см длиннее соседней, чему равна длина меньшей стороны?", a: ["10 см", "15 см", "20 см", "5 см"], exp: "Пусть меньшая сторона равна x, тогда большая — x+5. Периметр равен 2(x + x + 5) = 50 -> 4x + 10 = 50 -> 4x = 40 -> x = 10 см." },
+            correctIndex: 0
+        },
+        // 16
+        {
+            he: { q: "שאלה 16: היקף של ריבוע מיוצג על ידי הביטוי <span class='math-var'>8x - 8</span>, וצלעו היא <span class='math-var'>x + 1</span>. מצא את אורך צלע הריבוע.", a: ["3", "4", "2", "6"], exp: "היקף שווה ל-4 פעמים הצלע: 8x - 8 = 4(x + 1) -> 8x - 8 = 4x + 4 -> 4x = 12 -> x = 3. נציב בצליע: 3 + 1 = 4." },
+            en: { q: "Question 16: The perimeter of a square is given as <span class='math-var'>8x - 8</span>, while its individual side length is defined as <span class='math-var'>x + 1</span>. What is the actual side length?", a: ["3", "4", "2", "6"], exp: "Perimeter is 4 times the side length: 8x - 8 = 4(x + 1) -> 8x - 8 = 4x + 4 -> 4x = 12 -> x = 3. Side length is 3 + 1 = 4." },
+            ar: { q: "سؤال 16: محيط مربع معطى بالعبارة <span class='math-var'>8x - 8</span>، بينما يحدد طول ضلعه الفردي بالعبارة <span class='math-var'>x + 1</span>. ما هو طول الضلع الفعلي؟", a: ["3", "4", "2", "6"], exp: "المحيط يساوي 4 مرات طول הضلع: 8x - 8 = 4(x + 1) -> 4x = 12 -> x = 3. طول الضلع هو 3 + 1 = 4." },
+            ru: { q: "Вопрос 16: Периметр квадрата задан как <span class='math-var'>8x - 8</span>, а длина его стороны равна <span class='math-var'>x + 1</span>. Чему равна фактическая длина стороны?", a: ["3", "4", "2", "6"], exp: "Периметр в 4 раза больше стороны: 8x - 8 = 4(x + 1) -> 8x - 8 = 4x + 4 -> 4x = 12 -> x = 3. Длина стороны равна 3 + 1 = 4." },
+            correctIndex: 1
+        },
+        // 17
+        {
+            he: { q: "שאלה 17: שטח של מעויין הוא 32 סמ״ר. אם אלכסון אחד ארוך פי 4 מהאלכסון השני, מה אורך האלכסון הקצר?", a: ["2 ס״מ", "4 ס״מ", "8 ס״מ", "16 ס״מ"], exp: "נסמן את הקצר ב-d והארוך ב-4d. השטח הוא (d × 4d) / 2 = 32 -> 2d² = 32 -> d² = 16 -> d = 4 ס״מ." },
+            en: { q: "Question 17: The area of a rhombus is 32 cm². If one diagonal is 4 times longer than the other, what is the length of the shorter diagonal?", a: ["2 cm", "4 cm", "8 cm", "16 cm"], exp: "Let the shorter diagonal be d, then the longer is 4d. Area is (d × 4d) / 2 = 32 -> 2d² = 32 -> d² = 16 -> d = 4 cm." },
+            ar: { q: "سؤال 17: مساحة معين هي 32 سم². إذا كان أحد القطرين أطول بـ 4 مرات من الآخر، فما هو طول القطر الأقصر؟", a: ["2 سم", "4 سم", "8 سم", "16 سم"], exp: "نفرض القطر الأقصر d، والأطول 4d. المساحة هي (d × 4d) ÷ 2 = 32 -> 2d² = 32 -> d² = 16 -> d = 4 سم." },
+            ru: { q: "Вопрос 17: Площадь ромба равна 32 см². Если одна из его диагоналей в 4 раза длиннее другой, чему равна длина меньшей диагонали?", a: ["2 см", "4 см", "8 см", "16 см"], exp: "Пусть меньшая диагональ равна d, тогда большая — 4d. Площадь: (d × 4d) / 2 = 32 -> 2d² = 32 -> d² = 16 -> d = 4 см." },
+            correctIndex: 1
+        },
+        // 18
+        {
+            he: { q: "שאלה 18: שטח מלבן הוא <span class='math-var'>x² - 9</span>. אם רוחב המלבן מבוטא על ידי הקטע <span class='math-var'>x - 3</span>, מהו ביטוי ההיקף שלו?", a: ["2x", "4x", "4x + 12", "x + 3"], exp: "אורך המלבן מתקבל מחלוקת השטח ברוחב: (x²-9)/(x-3) = x+3. ההיקף הוא פעמיים סכום הצלעות: 2(x - 3 + x + 3) = 4x." },
+            en: { q: "Question 18: The area of a rectangle is evaluated as <span class='math-var'>x² - 9</span>. If its width is defined by the segment <span class='math-var'>x - 3</span>, what is its perimeter expression?", a: ["2x", "4x", "4x + 12", "x + 3"], exp: "Length is Area divided by Width: (x²-9)/(x-3) = x+3. Perimeter is twice the sum of length and width: 2(x - 3 + x + 3) = 4x." },
+            ar: { q: "سؤال 18: مساحة مستطيل تحسب بالعبارة <span class='math-var'>x² - 9</span>. إذا كان عرضه محدداً بالقطعة <span class='math-var'>x - 3</span>, فما هو تعبير محيطه؟", a: ["2x", "4x", "4x + 12", "x + 3"], exp: "الطول هو المساحة تقسيم العرض: (x²-9)/(x-3) = x+3. المحيط هو ضعف مجموع الطول والعرض: 2(x - 3 + x + 3) = 4x." },
+            ru: { q: "Вопрос 18: Площадь прямоугольника выражена как <span class='math-var'>x² - 9</span>. Если его ширина равна <span class='math-var'>x - 3</span>, каково выражение для его периметра?", a: ["2x", "4x", "4x + 12", "x + 3"], exp: "Длина равна площади, деленной на ширину: (x²-9)/(x-3) = x+3. Периметр равен удвоенной сумме сторон: 2(x - 3 + x + 3) = 4x." },
+            correctIndex: 1
+        },
+        // 19
+        {
+            he: { q: "שאלה 19: מהו סכום כל הזוויות הפנימיות במרובע קמור כלשהו?", a: ["180 מעלות", "360 מעלות", "540 מעלות", "720 מעלות"], exp: "כל מרובע ניתן לחלוקה לשני משולשים פנימיים, ולכן סכום זוויותיו הוא תמיד 2 × 180 = 360 מעלות." },
+            en: { q: "Question 19: What is the constant sum of all internal angles inside any convex quadrilateral?", a: ["180 degrees", "360 degrees", "540 degrees", "720 degrees"], exp: "Any quadrilateral can be split into two internal triangles, making its total angle sum 2 × 180 = 360 degrees." },
+            ar: { q: "سؤال 19: ما هو المجموع الثابت لجميع الزوايا الداخلية لأي شكل رباعي محدب؟", a: ["180 درجة", "360 درجة", "540 درجة", "720 درجة"], exp: "يمكن تقسيم أي شكل رباعي إلى مثلثين داخليين، مما يجعل مجموع زواياه الإجمالي دائماً 2 × 180 = 360 درجة." },
+            ru: { q: "Вопрос 19: Чему равна постоянная сумма всех внутренних углов любого выпуклого четырехугольника?", a: ["180 градусов", "360 градусов", "540 градусов", "720 градусов"], exp: "Любой четырехугольник можно разбить на два треугольника, поэтому сумма его внутренних углов всегда равна 2 × 180 = 360 градусов." },
+            correctIndex: 1
+        },
+        // 20
+        {
+            he: { q: "שאלה 20: מלבן וריבוע שווים בשטחם. שטח הריבוע הוא 36 סמ״ר. אם אורך המלבן הוא 9 ס״מ, מהו היקף המלבן?", a: ["26 ס״מ", "36 ס״מ", "24 ס״מ", "20 ס״מ"], exp: "שטח המלבן הוא 36 סמ״ר ואורכו 9, לכן רוחבו הוא 36/9 = 4 ס״מ. היקף המלבן הוא 2 × (9 + 4) = 26 ס״מ." },
+            en: { q: "Question 20: A rectangle and a square have identical areas. The square's area is 36 cm². If the rectangle's length is 9 cm, what is the perimeter of the rectangle?", a: ["26 cm", "36 cm", "24 cm", "20 cm"], exp: "The rectangle's area is 36 cm² and length is 9 cm, so its width is 36 / 9 = 4 cm. Its perimeter is 2 × (9 + 4) = 26 cm." },
+            ar: { q: "سؤال 20: مستطيل ومربع لهما مساحات متطابقة. مساحة المربع 36 سم². إذا كان طول المستطيل 9 سم، فما هو محيط المستطيل؟", a: ["26 سم", "36 سم", "24 سم", "20 سم"], exp: "مساحة المستطيل 36 سم² وطوله 9 سم، لذا عرضه هو 36 ÷ 9 = 4 سم. محيطه يساوي 2 × (9 + 4) = 26 سم." },
+            ru: { q: "Вопрос 20: Прямоугольник и квадрат имеют одинаковую площадь. Площадь квадрата равна 36 см². Если длина прямоугольника равна 9 см, чему равен его периметр?", a: ["26 см", "36 см", "24 см", "20 см"], exp: "Площадь прямоугольника равна 36 см², а длина — 9 см, значит его ширина составляет 36/9 = 4 см. Периметр равен 2 × (9 + 4) = 26 см." },
+            correctIndex: 0
+        }
+    ];
+
+    let activeQuestionsPool = [...quizDatabase]; // Dynamic slice holding current active pool order
+    let applicationLanguage = 'he';
+    let activeQuestionIndex = 0;
+    let savedAnswers = Array(quizDatabase.length).fill(null);
+    let lockedEvaluations = Array(quizDatabase.length).fill(false);
+
+    function buildInteractiveDiagram() {
+        const view = dynamicContent[applicationLanguage];
+        const layout = document.getElementById('live-diagram');
+        if (!layout) return;
+        layout.innerHTML = `
+            <div class="shape-box g-root">${view.quad}</div>
+            <div class="arrow g-arr1">↙</div><div class="arrow g-arr2">↘</div>
+            <div class="shape-box g-trap">${view.trapezoid}</div><div class="shape-box g-kite">${view.kite}</div>
+            <div class="arrow">⬇</div><div class="arrow">⬇</div><div></div>
+            <div class="shape-box g-iso">${view.isoTrap}</div><div class="shape-box g-para">${view.parallelogram}</div><div></div>
+            <div class="arrow">⬇</div><div class="arrow">⬇</div><div class="arrow">⬇</div>
+            <div class="shape-box g-rect">${view.rectangle}</div><div></div><div class="shape-box g-rhom">${view.rhombus}</div>
+            <div></div><div class="arrow">⬇</div><div></div>
+            <div></div><div class="shape-box g-sq highlight">${view.square}</div><div></div>
+        `;
+    }
+
+    function renderActiveQuestion() {
+        const lang = applicationLanguage;
+        const qData = activeQuestionsPool[activeQuestionIndex];
+        const localQuestion = qData[lang];
+        const uiText = dynamicContent[lang];
+
+        document.getElementById('question-counter').innerText = uiText.counter
+            .replace('{current}', activeQuestionIndex + 1)
+            .replace('{total}', activeQuestionsPool.length);
+
+        document.getElementById('question-text').innerHTML = localQuestion.q;
+
+        const optionsBox = document.getElementById('options-box');
+        optionsBox.innerHTML = '';
+
+        localQuestion.a.forEach((choiceText, index) => {
+            const element = document.createElement('button');
+            element.className = 'option-btn';
+            element.id = `opt-${index}`;
+            element.innerText = choiceText;
+            element.onclick = () => registerClickSelection(index);
+
+            if (savedAnswers[activeQuestionIndex] === index) {
+                element.classList.add('selected');
+            }
+            optionsBox.appendChild(element);
+        });
+
+        const feedbackPanel = document.getElementById('feedback-message');
+        feedbackPanel.style.display = 'none';
+        feedbackPanel.className = 'feedback-box';
+
+        if (lockedEvaluations[activeQuestionIndex]) {
+            exposeStateColors();
+        }
+
+        refreshNavigationButtons();
+    }
+
+    function registerClickSelection(selectedIndex) {
+        if (lockedEvaluations[activeQuestionIndex]) return;
+
+        savedAnswers[activeQuestionIndex] = selectedIndex;
+        
+        const container = document.getElementById('options-box');
+        container.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        
+        document.getElementById(`opt-${selectedIndex}`).classList.add('selected');
+        document.getElementById('btn-check').disabled = false;
+    }
+
+    function verifyChoice() {
+        const selected = savedAnswers[activeQuestionIndex];
+        if (selected === null) return;
+
+        lockedEvaluations[activeQuestionIndex] = true;
+        exposeStateColors();
+        refreshNavigationButtons();
+    }
+
+    function exposeStateColors() {
+        const selected = savedAnswers[activeQuestionIndex];
+        const correct = activeQuestionsPool[activeQuestionIndex].correctIndex;
+        const feedbackPanel = document.getElementById('feedback-message');
+        const labels = dynamicContent[applicationLanguage];
+        const contextExpl = activeQuestionsPool[activeQuestionIndex][applicationLanguage].exp;
+
+        for (let i = 0; i < activeQuestionsPool[activeQuestionIndex][applicationLanguage].a.length; i++) {
+            const targetBtn = document.getElementById(`opt-${i}`);
+            if (targetBtn) {
+                targetBtn.classList.remove('selected');
+                if (i === correct) targetBtn.classList.add('correct');
+                if (i === selected && selected !== correct) targetBtn.classList.add('wrong');
+            }
+        }
+
+        if (selected === correct) {
+            feedbackPanel.className = "feedback-box correct-style";
+            feedbackPanel.innerHTML = `<strong>✔ ${labels.correct}</strong><br>${contextExpl}`;
+        } else {
+            feedbackPanel.className = "feedback-box wrong-style";
+            feedbackPanel.innerHTML = `<strong>❌ ${labels.incorrect}</strong><br>${contextExpl}`;
+        }
+        feedbackPanel.style.display = 'block';
+    }
+
+    function navigateQuestion(direction) {
+        activeQuestionIndex += direction;
+        
+        if (activeQuestionIndex >= activeQuestionsPool.length) {
+            displayFinalReport();
+            return;
+        }
+        renderActiveQuestion();
+    }
+
+    function refreshNavigationButtons() {
+        const currentSelection = savedAnswers[activeQuestionIndex];
+        const isLocked = lockedEvaluations[activeQuestionIndex];
+        const uiText = dynamicContent[applicationLanguage];
+
+        document.getElementById('btn-prev').disabled = (activeQuestionIndex === 0);
+        document.getElementById('btn-prev').innerText = uiText.prev;
+        document.getElementById('btn-next').innerText = uiText.next;
+        document.getElementById('btn-check').innerText = uiText.check;
+        document.getElementById('btn-regen').innerText = uiText.regen;
+
+        if (isLocked) {
+            document.getElementById('btn-check').style.display = 'none';
+        } else {
+            document.getElementById('btn-check').style.display = 'inline-block';
+            document.getElementById('btn-check').disabled = (currentSelection === null);
+        }
+
+        const percentage = (activeQuestionIndex / activeQuestionsPool.length) * 100;
+        document.getElementById('quiz-progress').style.width = `${percentage}%`;
+    }
+
+    // Dynamic regeneration function: shuffles pool and resets gameplay arrays
+    function regenerateQuestions() {
+        // Simple array shuffle mechanism
+        for (let i = activeQuestionsPool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [activeQuestionsPool[i], activeQuestionsPool[j]] = [activeQuestionsPool[j], activeQuestionsPool[i]];
+        }
+        activeQuestionIndex = 0;
+        savedAnswers = Array(activeQuestionsPool.length).fill(null);
+        lockedEvaluations = Array(activeQuestionsPool.length).fill(false);
+        renderActiveQuestion();
+    }
+
+    function displayFinalReport() {
+        document.getElementById('quiz-stage-box').style.display = 'none';
+        const finalScreen = document.getElementById('result-screen');
+        finalScreen.style.display = 'block';
+
+        let correctCount = 0;
+        activeQuestionsPool.forEach((item, idx) => {
+            if (savedAnswers[idx] === item.correctIndex) correctCount++;
+        });
+
+        document.getElementById('score-display').innerText = `${correctCount} / ${activeQuestionsPool.length}`;
+    }
+
+    function launchQuizChallenge() {
+        document.getElementById('intro-portal').style.display = 'none';
+        document.getElementById('quiz-stage-box').style.display = 'block';
+        buildInteractiveDiagram();
+        renderActiveQuestion();
+    }
+
+    function resetQuizEngine() {
+        activeQuestionIndex = 0;
+        activeQuestionsPool = [...quizDatabase];
+        savedAnswers = Array(activeQuestionsPool.length).fill(null);
+        lockedEvaluations = Array(activeQuestionsPool.length).fill(false);
+        document.getElementById('intro-portal').style.block = 'block';
+        document.getElementById('intro-portal').style.display = 'block';
+        document.getElementById('quiz-stage-box').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'none';
+    }
+
+    function changeLanguage(targetLang) {
+        applicationLanguage = targetLang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        
+        if (window.event && window.event.target) {
+            window.event.target.classList.add('active');
+        }
+
+        const textBody = document.getElementById('question-text');
+        const p1 = document.getElementById('p-hist');
+        const p2 = document.getElementById('p-why');
+        const p3 = document.getElementById('p-school');
+
+        if (targetLang === 'he' || targetLang === 'ar') {
+            document.body.setAttribute('dir', 'rtl');
+            if (textBody) textBody.style.textAlign = 'right';
+            if (p1) { p1.style.textAlign = 'right'; p2.style.textAlign = 'right'; p3.style.textAlign = 'right'; }
+        } else {
+            document.body.removeAttribute('dir');
+            if (textBody) textBody.style.textAlign = 'left';
+            if (p1) { p1.style.textAlign = 'left'; p2.style.textAlign = 'left'; p3.style.textAlign = 'left'; }
+        }
+
+        // Update Portal View Context Translations
+        document.getElementById('portal-main-title').innerText = dynamicContent[targetLang].portalTitle;
+        document.getElementById('h-hist').innerText = dynamicContent[targetLang].hHist;
+        document.getElementById('p-hist').innerText = dynamicContent[targetLang].pHist;
+        document.getElementById('h-why').innerText = dynamicContent[targetLang].hWhy;
+        document.getElementById('p-why').innerText = dynamicContent[targetLang].pWhy;
+        document.getElementById('h-school').innerText = dynamicContent[targetLang].hSchool;
+        document.getElementById('p-school').innerText = dynamicContent[targetLang].pSchool;
+        document.getElementById('btn-start').innerText = dynamicContent[targetLang].startBtn;
+
+        // Update Gameplay Window elements
+        document.getElementById('quiz-title').innerText = dynamicContent[targetLang].title;
+        document.getElementById('map-title').innerText = dynamicContent[targetLang].mapTitle;
+
+        buildInteractiveDiagram();
+        if (document.getElementById('result-screen').style.display === 'block') {
+            displayFinalReport();
+        } else if (document.getElementById('quiz-stage-box').style.display === 'block') {
+            renderActiveQuestion();
+        }
+    }
+</script>
+
+</body>
+</html>
